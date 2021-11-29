@@ -13,9 +13,11 @@ namespace ReferFind
     {
         List<string> FoundRef = new List<string>();
         
-        public List<string> Finder(string path)
+        public List<string> Finder(string path, string regexOption)
         {
-            using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(path, true))
+            OpenSettings os = new OpenSettings();
+            os.AutoSave = false;
+            using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(path, true, os))
             {
                 Body body = wordDoc.MainDocumentPart.Document.Body;
                 string totaltext = body.InnerText;
@@ -25,12 +27,7 @@ namespace ReferFind
                 {
                     FoundRef.Add(items.ToString());
                 }
-                
-              //  var dupes = FoundRef.GroupBy(x => x)
-              //.Where(g => g.Count() > 1)
-              //.Select(y => y.Key)
-              //.ToList();
-                wordDoc.Close();
+                wordDoc.Dispose();
             }
             List<string> Distinct = FoundRef.Distinct().ToList();
             return Distinct;
