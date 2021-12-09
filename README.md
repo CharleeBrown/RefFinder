@@ -1,2 +1,2 @@
 # ReferencesFind
-This application searches for any ISO document references within the specified document.
+## This application opens a document, searches for the specified string and lists it on the output section. 
